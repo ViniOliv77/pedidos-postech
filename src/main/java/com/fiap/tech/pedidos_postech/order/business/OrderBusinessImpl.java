@@ -3,6 +3,7 @@ package com.fiap.tech.pedidos_postech.order.business;
 import com.fiap.tech.pedidos_postech.core.business.OrderBusiness;
 import com.fiap.tech.pedidos_postech.core.exception.BusinessException;
 import com.fiap.tech.pedidos_postech.core.exception.NotFoundException;
+import com.fiap.tech.pedidos_postech.core.queue.OrderQueueProducer;
 import com.fiap.tech.pedidos_postech.core.repository.OrderRepository;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
@@ -18,12 +19,18 @@ public class OrderBusinessImpl implements OrderBusiness {
 
     private final OrderRepository orderRepository;
 
+    private final OrderQueueProducer orderQueueProducer;
+
     @Override
     public Order createOrder(final Order order) {
         order.setCreatedAt(LocalDateTime.now());
         order.setUpdatedAt(LocalDateTime.now());
 
-        return orderRepository.save(order);
+        Order newOrder = orderRepository.save(order);
+
+        orderQueueProducer.publish(newOrder);
+
+        return newOrder;
     }
 
     @Override
@@ -49,6 +56,8 @@ public class OrderBusinessImpl implements OrderBusiness {
         order.setId(id);
         order.setUpdatedAt(LocalDateTime.now());
 
+        orderQueueProducer.publish(order);
+
         return orderRepository.save(order);
     }
 
@@ -63,6 +72,8 @@ public class OrderBusinessImpl implements OrderBusiness {
         }
 
         persistedOrder.setStatus(Status.CANCELLED);
+
+        orderQueueProducer.publish(persistedOrder);
 
         return orderRepository.save(persistedOrder);
     }

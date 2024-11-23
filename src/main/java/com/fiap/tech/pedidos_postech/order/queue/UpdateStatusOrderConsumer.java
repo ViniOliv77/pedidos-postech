@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PedidoQueueImpl {
+public class UpdateStatusOrderConsumer {
 
     private final OrderBusiness orderBusiness;
 
-    @SqsListener("${queue.name}")
+    @SqsListener("${queue.pedido.update.status.name}")
     public void updateStatus(OrderStatusUpdateDTO orderUpdate) {
         Order order = orderBusiness.getOrder(orderUpdate.getId());
 
