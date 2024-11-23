@@ -1,6 +1,9 @@
 package com.fiap.tech.pedidos_postech.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fiap.tech.pedidos_postech.domain.order.Order;
+import com.fiap.tech.pedidos_postech.mock.OrderDTOMock;
+import com.fiap.tech.pedidos_postech.mock.OrderMock;
 import com.fiap.tech.pedidos_postech.order.business.OrderBusinessImpl;
 import com.fiap.tech.pedidos_postech.order.controller.OrderController;
 import com.fiap.tech.pedidos_postech.order.dto.OrderDTO;
@@ -14,11 +17,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
-
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderControllerTest {
@@ -31,22 +34,18 @@ public class OrderControllerTest {
 
     private MockMvc mockMvc;
 
-    private OrderDTO orderDTO;
+    private final OrderDTO orderDTO = OrderDTOMock.create();
+
+    private final Order order = OrderMock.create();
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
-
-        orderDTO = new OrderDTO();
-        orderDTO.setClientId(1L);
-        orderDTO.setOrderDate(LocalDateTime.now());
-        orderDTO.setDeliveryDate(LocalDateTime.now().plusDays(5));
-        orderDTO.setNote("Sample order");
     }
 
     @Test
     void createOrder_ShouldReturnCreated() throws Exception {
-        when(orderService.createOrder(orderDTO)).thenReturn(orderDTO);
+        when(orderService.createOrder(order)).thenReturn(order);
 
         mockMvc.perform(post("/api/orders")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -58,7 +57,7 @@ public class OrderControllerTest {
 
     @Test
     void getOrder_ShouldReturnOrder() throws Exception {
-        when(orderService.getOrder(1L)).thenReturn(orderDTO);
+        when(orderService.getOrder(1L)).thenReturn(order);
 
         mockMvc.perform(get("/api/orders/1"))
                 .andExpect(status().isOk())

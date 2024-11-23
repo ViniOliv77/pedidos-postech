@@ -1,29 +1,25 @@
 package com.fiap.tech.pedidos_postech.domain.order;
 
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long clientId;
 
-    private List<Item> items;
+    private List<OrderItem> items;
 
     private LocalDateTime orderDate;
 
@@ -40,17 +36,14 @@ public class Order {
     @Getter
     @Setter
     @AllArgsConstructor
-    public static class Item {
-
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long orderId;
+    @Builder
+    public static class OrderItem {
 
         private Long productId;
 
         private Integer quantity;
 
-        private BigDecimal unitPrice;
+        private Double unitPrice;
 
     }
 

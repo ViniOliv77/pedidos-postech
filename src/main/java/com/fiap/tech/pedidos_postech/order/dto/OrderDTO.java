@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class OrderDTO {
 
     private Long id;
@@ -22,7 +24,7 @@ public class OrderDTO {
     private Long clientId;
 
     @NotNull
-    private List<OrderItemsDTO> items;
+    private List<OrderItemDTO> items;
 
     @NotNull
     private LocalDateTime orderDate;
@@ -36,7 +38,8 @@ public class OrderDTO {
     private Status status;
     @AllArgsConstructor
     @Valid
-    public static class OrderItemsDTO {
+    @Builder
+    public static class OrderItemDTO {
 
         @NotNull
         private Long productId;
