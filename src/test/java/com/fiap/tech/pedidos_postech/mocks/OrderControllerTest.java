@@ -1,9 +1,9 @@
 package com.fiap.tech.pedidos_postech.mocks;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fiap.tech.pedidos_postech.application.Service.OrderService;
-import com.fiap.tech.pedidos_postech.application.controller.OrderController;
-import com.fiap.tech.pedidos_postech.application.dto.OrderDTO;
+import com.fiap.tech.pedidos_postech.order.business.OrderBusinessImpl;
+import com.fiap.tech.pedidos_postech.order.controller.OrderController;
+import com.fiap.tech.pedidos_postech.order.dto.OrderDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class OrderControllerTest {
 
     @Mock
-    private OrderService orderService;
+    private OrderBusinessImpl orderService;
 
     @InjectMocks
     private OrderController orderController;

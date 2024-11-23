@@ -1,23 +1,22 @@
 package com.fiap.tech.pedidos_postech.usecase;
 
-import com.fiap.tech.pedidos_postech.domain.model.Order;
-import com.fiap.tech.pedidos_postech.infra.repository.OrderRepository;
+import com.fiap.tech.pedidos_postech.domain.order.Order;
+import com.fiap.tech.pedidos_postech.repository.repository.OrderJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-public class OrderRepositoryTest {
+public class OrderJpaRepositoryTest {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderJpaRepository orderJpaRepository;
 
     private Order order;
 
@@ -32,7 +31,7 @@ public class OrderRepositoryTest {
 
     @Test
     void saveOrder_ShouldReturnSavedOrder() {
-        Order savedOrder = orderRepository.save(order);
+        Order savedOrder = orderJpaRepository.save(order);
 
         assertNotNull(savedOrder.getId());
         assertEquals(order.getClientId(), savedOrder.getClientId());
@@ -40,9 +39,9 @@ public class OrderRepositoryTest {
 
     @Test
     void findById_ShouldReturnOrder() {
-        Order savedOrder = orderRepository.save(order);
+        Order savedOrder = orderJpaRepository.save(order);
 
-        Optional<Order> foundOrder = orderRepository.findById(savedOrder.getId());
+        Optional<Order> foundOrder = orderJpaRepository.findById(savedOrder.getId());
 
         assertTrue(foundOrder.isPresent());
         assertEquals(savedOrder.getId(), foundOrder.get().getId());
@@ -50,7 +49,7 @@ public class OrderRepositoryTest {
 
     @Test
     void findById_ShouldReturnEmptyIfNotFound() {
-        Optional<Order> foundOrder = orderRepository.findById(999L);
+        Optional<Order> foundOrder = orderJpaRepository.findById(999L);
 
         assertFalse(foundOrder.isPresent());
     }

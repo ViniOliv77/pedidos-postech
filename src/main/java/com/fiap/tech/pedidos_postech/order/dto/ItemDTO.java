@@ -1,4 +1,4 @@
-package com.fiap.tech.pedidos_postech.application.dto;
+package com.fiap.tech.pedidos_postech.order.dto;
 
 import lombok.Data;
 import java.math.BigDecimal;
