@@ -7,9 +7,7 @@ import com.fiap.tech.pedidos_postech.core.repository.OrderRepository;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
@@ -21,7 +19,7 @@ public class OrderBusinessImpl implements OrderBusiness {
 
     @Override
     public Order createOrder(final Order order) {
-        return orderRepository.createOrder(order);
+        return orderRepository.save(order);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class OrderBusinessImpl implements OrderBusiness {
 
         order.setId(id);
 
-        return orderRepository.update(order);
+        return orderRepository.save(order);
     }
 
     @Override
@@ -61,7 +59,7 @@ public class OrderBusinessImpl implements OrderBusiness {
 
         persistedOrder.setStatus(Status.CANCELLED);
 
-        return orderRepository.update(persistedOrder);
+        return orderRepository.save(persistedOrder);
     }
 
 }

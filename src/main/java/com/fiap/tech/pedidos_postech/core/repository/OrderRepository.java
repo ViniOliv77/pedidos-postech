@@ -7,12 +7,10 @@ import java.util.Set;
 
 public interface OrderRepository {
 
-    Order createOrder(Order order);
+    Order save(Order order);
 
     Optional<Order> findById(Long id);
 
     Set<Order> findAll();
-
-    Order update(Order order);
 
 }

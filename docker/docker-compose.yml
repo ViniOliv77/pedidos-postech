@@ -5,6 +5,6 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: pedidos
+      POSTGRES_DB: fase4
     ports:
       - "5432:5432"
