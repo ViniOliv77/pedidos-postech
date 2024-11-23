@@ -32,8 +32,10 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public Optional<Order> findById(final Long id) {
-        return orderAdapter.fromEntity(
-                orderJpaRepository.findById(id)
+        return Optional.ofNullable(
+                orderAdapter.fromEntity(
+                        orderJpaRepository.findById(id).orElse(null)
+                )
         );
     }
 

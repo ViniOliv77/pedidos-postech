@@ -1,5 +1,6 @@
 package com.fiap.tech.pedidos_postech.order.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -27,9 +28,11 @@ public class OrderDTO {
     private List<OrderItemDTO> items;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime orderDate;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime deliveryDate;
 
     @NotBlank

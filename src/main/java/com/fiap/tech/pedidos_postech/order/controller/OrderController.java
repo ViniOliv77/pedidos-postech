@@ -6,6 +6,7 @@ import com.fiap.tech.pedidos_postech.order.dto.OrderDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,7 +25,7 @@ public class OrderController {
 
     private final OrderBusiness orderService;
 
-    private final OrderAdapter orderAdapter = OrderAdapter.INSTANCE;
+    private final OrderAdapter orderAdapter;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/order")
@@ -37,7 +38,7 @@ public class OrderController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/api/order/{id}")
+    @GetMapping("/api/order/{id}")
     public OrderDTO getOrder(@PathVariable Long id) {
         return orderAdapter.fromDomain(
                 orderService.getOrder(id)
@@ -45,8 +46,8 @@ public class OrderController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/api/order")
-    public Set<OrderDTO> getOrder() {
+    @GetMapping("/api/order")
+    public Set<OrderDTO> getOrders() {
         return orderService.getOrders().stream().map(orderAdapter::fromDomain)
                 .collect(Collectors.toSet());
     }

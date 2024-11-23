@@ -3,25 +3,18 @@ package com.fiap.tech.pedidos_postech.order.adapter;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
 import com.fiap.tech.pedidos_postech.order.dto.OrderDTO;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 
-@Mapper
-public interface OrderAdapter {
+@Mapper(componentModel = "spring", imports = {Status.class})
+public abstract class OrderAdapter {
 
-    OrderAdapter INSTANCE = Mappers.getMapper(OrderAdapter.class);
+    public abstract OrderDTO fromDomain(Order domain);
 
-    OrderDTO fromDomain(Order domain);
-
-    Order toDomain(OrderDTO dto);
-
-    @AfterMapping
-    default void afterMapping(@MappingTarget Order order) {
-        if (order.getStatus() == null) {
-            order.setStatus(Status.REQUESTED);
-        }
-    }
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "items", source = "dto.items")
+    @Mapping(target = "status", defaultExpression = "java(Status.REQUESTED)")
+    public abstract Order toDomain(OrderDTO dto);
 
 }

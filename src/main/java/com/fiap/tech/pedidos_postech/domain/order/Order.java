@@ -39,6 +39,8 @@ public class Order {
     @Builder
     public static class OrderItem {
 
+        private Long id;
+
         private Long productId;
 
         private Integer quantity;
