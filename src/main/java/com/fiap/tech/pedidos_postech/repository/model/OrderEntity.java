@@ -1,7 +1,9 @@
 package com.fiap.tech.pedidos_postech.repository.model;
 
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,8 +31,8 @@ public class OrderEntity {
 
     private Long clientId;
 
-    @OneToMany(mappedBy = "order")
-    private List<ItemEntity> items;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ItemEntity> items;
 
     private LocalDateTime orderDate;
 

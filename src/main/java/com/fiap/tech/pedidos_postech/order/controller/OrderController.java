@@ -25,7 +25,7 @@ public class OrderController {
 
     private final OrderBusiness orderService;
 
-    private final OrderAdapter orderAdapter;
+    private final OrderAdapter orderAdapter = OrderAdapter.INSTANCE;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/order")
@@ -48,7 +48,8 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/order")
     public Set<OrderDTO> getOrders() {
-        return orderService.getOrders().stream().map(orderAdapter::fromDomain)
+        return orderService.getOrders().stream()
+                .map(orderAdapter::fromDomain)
                 .collect(Collectors.toSet());
     }
 

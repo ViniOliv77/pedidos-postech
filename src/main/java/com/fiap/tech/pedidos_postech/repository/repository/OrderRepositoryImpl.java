@@ -41,8 +41,9 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public Set<Order> findAll() {
-        return orderJpaRepository.findAll().stream().map(orderAdapter::fromEntity).collect(
-                Collectors.toSet());
+        return orderJpaRepository.findAll().stream()
+                .map(orderAdapter::fromEntity)
+                .collect(Collectors.toSet());
     }
 
 }
