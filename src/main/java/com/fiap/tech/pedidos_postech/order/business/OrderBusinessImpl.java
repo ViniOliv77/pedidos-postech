@@ -10,7 +10,6 @@ import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Component
@@ -23,9 +22,6 @@ public class OrderBusinessImpl implements OrderBusiness {
 
     @Override
     public Order createOrder(final Order order) {
-        order.setCreatedAt(LocalDateTime.now());
-        order.setUpdatedAt(LocalDateTime.now());
-
         Order newOrder = orderRepository.save(order);
 
         orderQueueProducer.publish(newOrder);
@@ -54,7 +50,6 @@ public class OrderBusinessImpl implements OrderBusiness {
         }
 
         order.setId(id);
-        order.setUpdatedAt(LocalDateTime.now());
 
         orderQueueProducer.publish(order);
 
