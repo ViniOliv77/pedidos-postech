@@ -1,8 +1,6 @@
 package com.fiap.tech.pedidos_postech.core.business;
 
 import com.fiap.tech.pedidos_postech.domain.order.Order;
-import com.fiap.tech.pedidos_postech.order.dto.OrderDTO;
-import jakarta.validation.Valid;
 
 import java.util.Set;
 

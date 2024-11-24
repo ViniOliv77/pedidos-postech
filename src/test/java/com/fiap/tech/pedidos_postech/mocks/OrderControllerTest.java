@@ -24,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class OrderControllerTest {
 
+    private final Order order = OrderMock.create();
+
     @Mock
     private OrderBusinessImpl orderService;
 
@@ -31,8 +33,6 @@ public class OrderControllerTest {
     private OrderController orderController;
 
     private MockMvc mockMvc;
-
-    private final Order order = OrderMock.create();
 
     @BeforeEach
     void setUp() {

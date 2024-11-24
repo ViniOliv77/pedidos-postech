@@ -26,6 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class OrderControllerTest {
 
+    private final OrderDTO orderDTO = OrderDTOMock.create();
+
+    private final Order order = OrderMock.create();
+
     @Mock
     private OrderBusinessImpl orderService;
 
@@ -33,10 +37,6 @@ public class OrderControllerTest {
     private OrderController orderController;
 
     private MockMvc mockMvc;
-
-    private final OrderDTO orderDTO = OrderDTOMock.create();
-
-    private final Order order = OrderMock.create();
 
     @BeforeEach
     void setUp() {
@@ -48,8 +48,8 @@ public class OrderControllerTest {
         when(orderService.createOrder(order)).thenReturn(order);
 
         mockMvc.perform(post("/api/orders")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(orderDTO)))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(orderDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.clientId").value(orderDTO.getClientId()))
                 .andExpect(jsonPath("$.orderDate").value(orderDTO.getOrderDate().toString()));
@@ -72,4 +72,5 @@ public class OrderControllerTest {
         mockMvc.perform(get("/api/orders/1"))
                 .andExpect(status().isNotFound());
     }
+
 }

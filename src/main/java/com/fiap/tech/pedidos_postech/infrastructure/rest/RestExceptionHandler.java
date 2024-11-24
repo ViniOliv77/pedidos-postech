@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RestExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @ExceptionHandler(NotFoundException.class)
@@ -41,7 +42,8 @@ public class RestExceptionHandler {
             this.logger.error("Error converting exception to json");
         }
 
-        return ResponseEntity.internalServerError().body(new ErrorResponse("Internal Server Error"));
+        return ResponseEntity.internalServerError()
+                .body(new ErrorResponse("Internal Server Error"));
     }
 
 }
