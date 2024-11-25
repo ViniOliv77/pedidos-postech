@@ -4,7 +4,10 @@ public enum Status {
     REQUESTED,
     APPROVED,
     IN_PROGRESS,
-    SENT,
+    WAITING_DRIVER,
+    COLLECTED,
+    IN_TRANSPORT,
+    DELIVERED,
     FINISHED,
     CANCELLED
 }
