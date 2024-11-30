@@ -1,5 +1,6 @@
 package com.fiap.tech.pedidos_postech.repository.repository;
 
+import com.fiap.tech.pedidos_postech.core.exception.NotFoundException;
 import com.fiap.tech.pedidos_postech.core.repository.OrderRepository;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.repository.adapter.OrderAdapter;
@@ -24,6 +25,19 @@ public class OrderRepositoryImpl implements OrderRepository {
         return orderAdapter.fromEntity(
                 orderJpaRepository.save(
                         orderAdapter.toEntity(
+                                order
+                        )
+                )
+        );
+    }
+
+    @Override
+    public Order update(final Order order) {
+        return orderAdapter.fromEntity(
+                orderJpaRepository.save(
+                        orderAdapter.update(
+                                orderJpaRepository.findById(order.getId()).orElseThrow(
+                                        () -> new NotFoundException("Pedido não encontrado")),
                                 order
                         )
                 )

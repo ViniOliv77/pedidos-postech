@@ -4,7 +4,7 @@ import com.fiap.tech.pedidos_postech.core.business.OrderBusiness;
 import com.fiap.tech.pedidos_postech.core.exception.BusinessException;
 import com.fiap.tech.pedidos_postech.core.exception.NotFoundException;
 import com.fiap.tech.pedidos_postech.core.queue.LogisticQueueProducer;
-import com.fiap.tech.pedidos_postech.core.queue.StorageQueueProducer;
+import com.fiap.tech.pedidos_postech.core.queue.ProductQueueProducer;
 import com.fiap.tech.pedidos_postech.core.repository.OrderRepository;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
@@ -19,7 +19,7 @@ public class OrderBusinessImpl implements OrderBusiness {
 
     private final OrderRepository orderRepository;
 
-    private final StorageQueueProducer storageQueueProducer;
+    private final ProductQueueProducer productQueueProducer;
 
     private final LogisticQueueProducer logisticQueueProducer;
 
@@ -27,7 +27,7 @@ public class OrderBusinessImpl implements OrderBusiness {
     public Order createOrder(final Order order) {
         Order newOrder = orderRepository.save(order);
 
-        storageQueueProducer.publish(newOrder, false);
+        productQueueProducer.publish(newOrder, false);
         logisticQueueProducer.publish(newOrder, false);
 
         return newOrder;
@@ -36,7 +36,7 @@ public class OrderBusinessImpl implements OrderBusiness {
     @Override
     public Order getOrder(final Long id) {
         return orderRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Order not found"));
+                .orElseThrow(() -> new NotFoundException("Pedido não encontrado"));
     }
 
     @Override
@@ -48,35 +48,37 @@ public class OrderBusinessImpl implements OrderBusiness {
     public Order putOrder(final Long id, final Order order) {
         final Order persistedOrder = getOrder(id);
 
-        if (persistedOrder.getStatus().equals(Status.CANCELLED) ||
-                persistedOrder.getStatus().equals(Status.FINISHED)) {
-            throw new BusinessException("Terminate order can not be updated");
+        if (!Status.isCancellable(persistedOrder.getStatus())) {
+            throw new BusinessException(
+                    "Pedido em transferencia ou finalizado não pode ser alterado");
         }
 
         order.setId(id);
 
-        storageQueueProducer.publish(persistedOrder, true);
-        storageQueueProducer.publish(order, false);
+        productQueueProducer.publish(persistedOrder, true);
+        productQueueProducer.publish(order, false);
+
+        logisticQueueProducer.publish(persistedOrder, true);
         logisticQueueProducer.publish(order, false);
 
-        return orderRepository.save(order);
+        return orderRepository.update(order);
     }
 
     @Override
     public Order cancelOrder(final Long id) {
         final Order persistedOrder = getOrder(id);
 
-        if (persistedOrder.getStatus().equals(Status.CANCELLED) ||
-                persistedOrder.getStatus().equals(Status.FINISHED)) {
-            throw new BusinessException("Terminate order can not be updated");
+        if (!Status.isCancellable(persistedOrder.getStatus())) {
+            throw new BusinessException(
+                    "Pedido em transferencia ou finalizado não pode ser alterado");
         }
 
         persistedOrder.setStatus(Status.CANCELLED);
 
-        storageQueueProducer.publish(persistedOrder, true);
+        productQueueProducer.publish(persistedOrder, true);
         logisticQueueProducer.publish(persistedOrder, true);
 
-        return orderRepository.save(persistedOrder);
+        return orderRepository.update(persistedOrder);
     }
 
 }

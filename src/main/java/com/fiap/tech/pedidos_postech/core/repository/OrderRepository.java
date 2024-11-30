@@ -9,6 +9,8 @@ public interface OrderRepository {
 
     Order save(Order order);
 
+    Order update(Order order);
+
     Optional<Order> findById(Long id);
 
     Set<Order> findAll();

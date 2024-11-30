@@ -1,6 +1,6 @@
 package com.fiap.tech.pedidos_postech.order.queue;
 
-import com.fiap.tech.pedidos_postech.core.queue.StorageQueueProducer;
+import com.fiap.tech.pedidos_postech.core.queue.ProductQueueProducer;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.order.dto.StorageDTO;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class StorageQueueProducerImpl implements StorageQueueProducer {
+public class ProductQueueProducerImpl implements ProductQueueProducer {
 
     private final SqsTemplate sqsTemplate;
 
-    @Value("${queue.estoque.name}")
+    @Value("${queue.product.name}")
     private String queueUrl;
 
     @Override

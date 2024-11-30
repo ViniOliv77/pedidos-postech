@@ -33,7 +33,8 @@ public class OrderEntity {
 
     private Long clientId;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL,
+               orphanRemoval = true)
     private Set<ItemEntity> items;
 
     private LocalDateTime orderDate;

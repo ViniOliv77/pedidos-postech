@@ -14,7 +14,7 @@ public class UpdateStatusOrderConsumer {
 
     private final OrderBusiness orderBusiness;
 
-    @SqsListener("${queue.pedido.update.status.name}")
+    @SqsListener("${queue.order.update.status.name}")
     public void updateStatus(OrderStatusUpdateDTO orderUpdate) {
         Order order = orderBusiness.getOrder(orderUpdate.getId());
 

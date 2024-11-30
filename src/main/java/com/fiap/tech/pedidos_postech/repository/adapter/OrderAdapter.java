@@ -6,6 +6,7 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
@@ -24,5 +25,9 @@ public interface OrderAdapter {
     default void afterMapping(@MappingTarget final OrderEntity orderEntity) {
         orderEntity.getItems().forEach(orderItem -> orderItem.setOrder(orderEntity));
     }
+
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    OrderEntity update(@MappingTarget OrderEntity persistedOrder, Order updatedOrder);
 
 }

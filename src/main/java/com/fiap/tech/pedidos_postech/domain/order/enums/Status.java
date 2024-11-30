@@ -9,5 +9,12 @@ public enum Status {
     IN_TRANSPORT,
     DELIVERED,
     FINISHED,
-    CANCELLED
+    CANCELLED;
+
+    public static Boolean isCancellable(Status status) {
+        return switch (status) {
+            case REQUESTED, APPROVED, IN_PROGRESS, WAITING_DRIVER -> true;
+            default -> false;
+        };
+    }
 }

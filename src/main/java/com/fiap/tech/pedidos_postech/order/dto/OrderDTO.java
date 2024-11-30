@@ -40,6 +40,12 @@ public class OrderDTO {
 
     private Status status;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private LocalDateTime createdAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private LocalDateTime updatedAt;
+
     @AllArgsConstructor
     @Builder
     @NoArgsConstructor
