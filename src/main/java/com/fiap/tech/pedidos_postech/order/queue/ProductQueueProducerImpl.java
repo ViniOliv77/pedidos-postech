@@ -1,5 +1,7 @@
 package com.fiap.tech.pedidos_postech.order.queue;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiap.tech.pedidos_postech.core.queue.ProductQueueProducer;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.order.dto.StorageDTO;
@@ -14,18 +16,25 @@ public class ProductQueueProducerImpl implements ProductQueueProducer {
 
     private final SqsTemplate sqsTemplate;
 
+    private final ObjectMapper objectMapper;
+
     @Value("${queue.product.name}")
     private String queueUrl;
 
     @Override
     public void publish(Order order, Boolean cancelled) {
         order.getItems().forEach(item -> {
-            sqsTemplate.send(
-                    queueUrl, new StorageDTO(
-                            item.getProductId(), item.getQuantity(), cancelled
-                    )
-            );
+            try {
+                sqsTemplate.send(
+                        queueUrl, objectMapper.writeValueAsString(
+                                new StorageDTO(
+                                        item.getProductId(), item.getQuantity(), cancelled
+                                )
+                        )
+                );
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
-
 }

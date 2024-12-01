@@ -1,5 +1,6 @@
 package com.fiap.tech.pedidos_postech.order.queue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiap.tech.pedidos_postech.core.business.OrderBusiness;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
@@ -14,13 +15,22 @@ public class UpdateStatusOrderConsumer {
 
     private final OrderBusiness orderBusiness;
 
+    private final ObjectMapper objectMapper;
+
     @SqsListener("${queue.order.update.status.name}")
-    public void updateStatus(OrderStatusUpdateDTO orderUpdate) {
-        Order order = orderBusiness.getOrder(orderUpdate.getId());
+    public void updateStatus(String dto) {
+        try {
+            OrderStatusUpdateDTO orderUpdate = objectMapper.readValue(
+                    dto, OrderStatusUpdateDTO.class);
 
-        order.setStatus(Status.valueOf(orderUpdate.getStatus()));
+            Order order = orderBusiness.getOrder(orderUpdate.getId());
 
-        orderBusiness.putOrder(orderUpdate.getId(), order);
+            order.setStatus(Status.valueOf(orderUpdate.getStatus()));
+
+            orderBusiness.putOrder(orderUpdate.getId(), order);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

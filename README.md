@@ -23,7 +23,6 @@ documentação está [aqui](http://localhost:8081/swagger-ui/index.html#/order-c
 Para obter uma lista com todos os pedidos cadastrados, utiliza-se o endpoint GET /api/order.
 Cuja documentação
 está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/getOrders).
-**Atenção, essa consulta é case sensitive**.
 
 ### Cencelar um pedido
 
