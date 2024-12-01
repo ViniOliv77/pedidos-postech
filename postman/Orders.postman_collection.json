@@ -1,0 +1,123 @@
+{
+  "info": {
+    "_postman_id": "2451105f-6887-4722-b129-f3eb864801e8",
+    "name": "Orders",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "7521044",
+    "_collection_link": "https://dark-sunset-907085.postman.co/workspace/PosTech~fcc103fa-9367-4da2-9885-c9c6b1ebcc5d/collection/7521044-2451105f-6887-4722-b129-f3eb864801e8?action=share&source=collection_link&creator=7521044"
+  },
+  "item": [
+    {
+      "name": "api/order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"clientId\": 1,\n    \"items\": [\n        {\n            \"productId\": 1,\n            \"quantity\": 10,\n            \"unitPrice\": 1.5\n        }\n    ],\n    \"orderDate\": \"2024-11-23T13:14:03.277Z\",\n    \"deliveryDate\": \"2024-11-28T13:14:03.277Z\",\n    \"note\": \"Pedido prioritário\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url-order}}/api/order",
+          "host": [
+            "{{url-order}}"
+          ],
+          "path": [
+            "api",
+            "order"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "api/order",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url-order}}/api/order",
+          "host": [
+            "{{url-order}}"
+          ],
+          "path": [
+            "api",
+            "order"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "api/order/{id}",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url-order}}/api/order/{{orderId}}",
+          "host": [
+            "{{url-order}}"
+          ],
+          "path": [
+            "api",
+            "order",
+            "{{orderId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "api/order/{id}",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"clientId\": 1,\n    \"items\": [\n        {\n            \"productId\": 2,\n            \"quantity\": 10,\n            \"unitPrice\": 1.5\n        }\n    ],\n    \"orderDate\": \"2024-11-23T13:14:03.277Z\",\n    \"deliveryDate\": \"2024-11-28T13:14:03.277Z\",\n    \"note\": \"Pedido prioritário\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url-order}}/api/order/{{orderId}}",
+          "host": [
+            "{{url-order}}"
+          ],
+          "path": [
+            "api",
+            "order",
+            "{{orderId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "api/order/{id}/cancel",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "{{url-order}}/api/order/{{orderId}}/cancel",
+          "host": [
+            "{{url-order}}"
+          ],
+          "path": [
+            "api",
+            "order",
+            "{{orderId}}",
+            "cancel"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
