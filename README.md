@@ -27,7 +27,12 @@ está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/getOr
 ### Cancelar um pedido
 
 Para cancelar um pedido, pode-se utilizar o endpoint PUT /api/order/{id}/cancel. Sua documentação
-está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/cancelOrder)
+está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/cancelOrder). Esta ação
+cancela o pedido também no serviço de logística
+
+### Atualização de status do pedido baseado na logistica
+
+O status do pedido é atualizado automáticamente, via comunicação SQS com o serviço de logística.
 
 ## Inicializando localmente a API
 

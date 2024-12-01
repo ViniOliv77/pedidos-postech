@@ -45,17 +45,17 @@ public class OrderBusinessImpl implements OrderBusiness {
     }
 
     @Override
-    public Order putOrder(final Long id, final Order order, final Boolean sendMessage) {
+    public Order putOrder(final Long id, final Order order, final Boolean fromController) {
         final Order persistedOrder = getOrder(id);
 
-        if (!Status.isCancellable(persistedOrder.getStatus())) {
+        if (fromController && !Status.isCancellable(persistedOrder.getStatus())) {
             throw new BusinessException(
                     "Pedido em transferencia ou finalizado não pode ser alterado");
         }
 
         order.setId(id);
 
-        if (sendMessage) {
+        if (fromController) {
             productQueueProducer.publish(persistedOrder, true);
             productQueueProducer.publish(order, false);
 

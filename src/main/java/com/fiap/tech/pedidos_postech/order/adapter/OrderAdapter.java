@@ -3,6 +3,7 @@ package com.fiap.tech.pedidos_postech.order.adapter;
 import com.fiap.tech.pedidos_postech.domain.order.Order;
 import com.fiap.tech.pedidos_postech.domain.order.enums.Status;
 import com.fiap.tech.pedidos_postech.order.dto.OrderDTO;
+import com.fiap.tech.pedidos_postech.order.dto.OrderMessageDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -19,5 +20,7 @@ public interface OrderAdapter {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "status", defaultExpression = "java(Status.REQUESTED)")
     Order toDomain(OrderDTO dto);
+
+    OrderMessageDTO toMessage(Order domain);
 
 }
