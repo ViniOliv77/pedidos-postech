@@ -4,31 +4,31 @@
 
 ### Cadastrar um novo pedido
 
-Esse cadastro será efetuado pela rota POST /api/clients, a documentação deste endpoint pode ser
-acessada [aqui](http://localhost:8080/swagger-ui/index.html#/client-controller/createClient)
+Esse cadastro será efetuado pela rota POST /api/order, a documentação deste endpoint pode ser
+acessada [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/createOrder)
 
-#### Atualizar um client
+#### Atualizar um pedido
 
 Após o cadastro, caso necessário poderemos atualizar o registro utilizando o endpoint PUT
-/api/clients/{id}. A documentação deste endpoint pode ser acessada
-aqui [aqui](http://localhost:8080/swagger-ui/index.html#/client-controller/updateClient)
+/api/order/{id}. A documentação deste endpoint pode ser acessada
+aqui [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/putOrder)
 
-### Buscar por um client
+### Buscar por um pedido
 
-Para obter os dados de cadastro do client, pode-se utilizar o endpoint GET /api/clients/{id}. Sua
-documentação está [aqui](http://localhost:8080/swagger-ui/index.html#/client-controller/getClient)
+Para obter os dados de cadastro do pedido, pode-se utilizar o endpoint GET /api/order/{id}. Sua
+documentação está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/getOrder)
 
-#### Consultar todos os restaurantes cadastrados
+#### Consultar todos os pedidos cadastrados
 
-Para obter uma lista com todos os clients cadastrados, utiliza-se o endpoint GET /api/clients/.
+Para obter uma lista com todos os pedidos cadastrados, utiliza-se o endpoint GET /api/order.
 Cuja documentação
-está [aqui](http://localhost:8080/swagger-ui/index.html#/client-controller/getClients).
+está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/getOrders).
 **Atenção, essa consulta é case sensitive**.
 
-### Deletar um client
+### Cencelar um pedido
 
-Para remover um client, pode-se utilizar o endpoint DELETE /api/clients/{id}. Sua documentação
-está [aqui](http://localhost:8080/swagger-ui/index.html#/client-controller/deleteClient)
+Para cancelar um pedido, pode-se utilizar o endpoint PUT /api/order/{id}/cancel. Sua documentação
+está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/cancelOrder)
 
 ## Inicializando localmente a API
 
@@ -53,25 +53,3 @@ Para fazer requisições a API é necessário o uso de algum software que tenha 
 Postman, Insomnia, Apidog, ...) ou pode utilizar o terminal para rodar comandos cURL.
 
 Caso utilize o postman, pode importar a collection que está no package .\postman
-
-# Configurando AWS localstack
-
-`aws configure --profile localstack`
-
-`AWS_ACCESS_KEY_ID="test"`
-
-`AWS_SECRET_ACCESS_KEY="test"`
-
-`AWS_DEFAULT_REGION="us-east-1"`
-
-`DEFAULT OUTPUT="json"`
-
-# Criando filas
-
-`aws sqs create-queue --endpoint-url http://localhost:4566 --queue-name pedido-queue --profile localstack`
-
-`aws sqs create-queue --endpoint-url http://localhost:4566 --queue-name pedido-update-status-queue --profile localstack`
-
-`aws sqs create-queue --endpoint-url http://localhost:4566 --queue-name logistica-queue --profile localstack`
-
-`aws sqs create-queue --endpoint-url http://localhost:4566 --queue-name produto-queue --profile localstack`
