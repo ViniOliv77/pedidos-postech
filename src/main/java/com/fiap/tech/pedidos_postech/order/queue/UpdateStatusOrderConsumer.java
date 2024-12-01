@@ -27,7 +27,7 @@ public class UpdateStatusOrderConsumer {
 
             order.setStatus(Status.valueOf(orderUpdate.getStatus()));
 
-            orderBusiness.putOrder(orderUpdate.getId(), order);
+            orderBusiness.putOrder(orderUpdate.getId(), order, false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

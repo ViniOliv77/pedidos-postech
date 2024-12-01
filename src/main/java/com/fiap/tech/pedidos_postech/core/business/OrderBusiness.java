@@ -12,7 +12,7 @@ public interface OrderBusiness {
 
     Set<Order> getOrders();
 
-    Order putOrder(Long id, Order order);
+    Order putOrder(Long id, Order order, Boolean sendMessage);
 
     Order cancelOrder(Long id);
 

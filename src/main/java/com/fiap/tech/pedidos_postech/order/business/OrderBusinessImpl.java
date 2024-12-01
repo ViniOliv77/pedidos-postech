@@ -45,7 +45,7 @@ public class OrderBusinessImpl implements OrderBusiness {
     }
 
     @Override
-    public Order putOrder(final Long id, final Order order) {
+    public Order putOrder(final Long id, final Order order, final Boolean sendMessage) {
         final Order persistedOrder = getOrder(id);
 
         if (!Status.isCancellable(persistedOrder.getStatus())) {
@@ -55,11 +55,13 @@ public class OrderBusinessImpl implements OrderBusiness {
 
         order.setId(id);
 
-        productQueueProducer.publish(persistedOrder, true);
-        productQueueProducer.publish(order, false);
+        if (sendMessage) {
+            productQueueProducer.publish(persistedOrder, true);
+            productQueueProducer.publish(order, false);
 
-        logisticQueueProducer.publish(persistedOrder, true);
-        logisticQueueProducer.publish(order, false);
+            logisticQueueProducer.publish(persistedOrder, true);
+            logisticQueueProducer.publish(order, false);
+        }
 
         return orderRepository.update(order);
     }

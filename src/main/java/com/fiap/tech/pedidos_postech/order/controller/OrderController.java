@@ -59,7 +59,8 @@ public class OrderController {
         return orderAdapter.fromDomain(
                 orderService.putOrder(
                         id,
-                        orderAdapter.toDomain(orderDTO)
+                        orderAdapter.toDomain(orderDTO),
+                        true
                 )
         );
     }
