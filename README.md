@@ -24,7 +24,7 @@ Para obter uma lista com todos os pedidos cadastrados, utiliza-se o endpoint GET
 Cuja documentação
 está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/getOrders).
 
-### Cencelar um pedido
+### Cancelar um pedido
 
 Para cancelar um pedido, pode-se utilizar o endpoint PUT /api/order/{id}/cancel. Sua documentação
 está [aqui](http://localhost:8081/swagger-ui/index.html#/order-controller/cancelOrder)
